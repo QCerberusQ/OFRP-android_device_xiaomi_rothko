@@ -57,6 +57,12 @@ if [ "$1" = "$FDEVICE" -o "$FOX_BUILD_DEVICE" = "$FDEVICE" ]; then
 	export FOX_VENDOR_BOOT_RECOVERY=1
 
 	# -----------------------------------------------------------------------
+	# Storage / Theme Paths
+	# -----------------------------------------------------------------------
+	export FOX_SETTINGS_ROOT_DIRECTORY=/persist/recovery
+	export FOX_MISCELLANEOUS_ROOT_DIRECTORY=/sdcard
+
+	# -----------------------------------------------------------------------
 	# A/B + Virtual A/B
 	# -----------------------------------------------------------------------
 	export FOX_AB_DEVICE=1

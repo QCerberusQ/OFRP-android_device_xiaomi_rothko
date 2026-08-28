@@ -13,9 +13,6 @@ ro.crypto.volume.filenames_mode=aes-256-cts
 # Platform
 ro.vendor.mediatek.platform=MT6989
 
-# Timezone
-persist.sys.timezone=Asia/Jakarta
-
 # Storage
 external_storage.projid.enabled=1
 external_storage.casefold.enabled=1
