@@ -16,6 +16,49 @@
 
 DEVICE_PATH := device/xiaomi/rothko
 
+# A/B
+AB_OTA_UPDATER := true
+TARGET_ENFORCE_AB_OTA_PARTITION_LIST := true
+AB_OTA_PARTITIONS += \
+    apusys \
+    audio_dsp \
+    boot \
+    ccu \
+    connsys_gnss \
+    countrycode \
+    dpm \
+    dtbo \
+    gpueb \
+    gz \
+    init_boot \
+    lk \
+    logo \
+    mcf_ota \
+    mcupm \
+    modem \
+    mvpu_algo \
+    odm \
+    odm_dlkm \
+    pi_img \
+    preloader_raw \
+    product \
+    pvmfw \
+    scp \
+    spmfw \
+    sspm \
+    system \
+    system_dlkm \
+    system_ext \
+    tee \
+    vbmeta \
+    vbmeta_system \
+    vbmeta_vendor \
+    vcp \
+    vendor \
+    vendor_boot \
+    vendor_dlkm \
+    mi_ext
+
 # Architecture
 TARGET_ARCH := arm64
 TARGET_ARCH_VARIANT := armv8-a
@@ -131,9 +174,6 @@ TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/root/system/etc/recovery.fstab
 TARGET_SCREEN_HEIGHT := 2712
 TARGET_SCREEN_WIDTH := 1220
 
-# Screen Density
-# TARGET_SCREEN_DENSITY := 446
-
 # Recovery
 TARGET_NO_RECOVERY := true
 BOARD_HAS_LARGE_FILESYSTEM := true
@@ -155,24 +195,18 @@ TW_THEME := portrait_hdpi
 TW_BRIGHTNESS_PATH := "/sys/class/leds/lcd-backlight/brightness"
 TW_DEFAULT_BRIGHTNESS := 200
 TW_MAX_BRIGHTNESS := 2047
-TWRP_NEW_THEME := true
 RECOVERY_SDCARD_ON_DATA := true
 TW_EXCLUDE_DEFAULT_USB_INIT := true
 TW_PREPARE_DATA_MEDIA_EARLY := true
 TW_USE_NEW_MINADBD := true
 TW_EXCLUDE_APEX := true
 TW_EXTRA_LANGUAGES := true
-TW_DEFAULT_LANGUAGE := id
+TW_DEFAULT_LANGUAGE := en
 TW_HAS_NO_DISPLAY_CUTOUT := false
-# TW_STATUS_BAR_HEIGHT := 90
-# TW_Y_OFFSET := 90
-# TW_H_OFFSET := -90
 TW_NO_LEGACY_PROPS := true
 TW_NO_BIND_SYSTEM := true
 TW_BACKUP_EXCLUSIONS := /data/fonts
 TW_INPUT_BLACKLIST := "hbtp_vm"
-TW_DEVICE_VERSION := Xiaomi_14T_Pro | JonesqPacMan
-MAINTAINER := JonesqPacMan
 TARGET_USE_CUSTOM_LUN_FILE_PATH := /config/usb_gadget/g1/functions/mass_storage.usb0/lun.%d/file
 TW_USE_SERIALNO_PROPERTY_FOR_DEVICE_ID := true
 

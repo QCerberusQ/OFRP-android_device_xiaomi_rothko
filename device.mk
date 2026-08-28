@@ -37,6 +37,9 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota/launch_with_ven
 # Configure twrp common.mk
 $(call inherit-product, vendor/twrp/config/common.mk)
 
+# Configure OrangeFox device flags
+$(call inherit-product, $(DEVICE_PATH)/fox_rothko.mk)
+
 # API
 PRODUCT_SHIPPING_API_LEVEL := 34
 PRODUCT_TARGET_VNDK_VERSION := 36
@@ -48,48 +51,7 @@ PRODUCT_PROPERTY_OVERRIDES += persist.sys.fuse.passthrough.enable=true
 PRODUCT_PROPERTY_OVERRIDES += ro.twrp.vendor_boot=true
 
 # A/B
-AB_OTA_UPDATER := true
 ENABLE_VIRTUAL_AB := true
-TARGET_ENFORCE_AB_OTA_PARTITION_LIST := true
-AB_OTA_PARTITIONS += \
-    apusys \
-    audio_dsp \
-    boot \
-    ccu \
-    connsys_gnss \
-    countrycode \
-    dpm \
-    dtbo \
-    gpueb \
-    gz \
-    init_boot \
-    lk \
-    logo \
-    mcf_ota \
-    mcupm \
-    modem \
-    mvpu_algo \
-    odm \
-    odm_dlkm \
-    pi_img \
-    preloader_raw \
-    product \
-    pvmfw \
-    scp \
-    spmfw \
-    sspm \
-    system \
-    system_dlkm \
-    system_ext \
-    tee \
-    vbmeta \
-    vbmeta_system \
-    vbmeta_vendor \
-    vcp \
-    vendor \
-    vendor_boot \
-    vendor_dlkm \
-    mi_ext
     
 PRODUCT_PACKAGES += \
     update_engine \
