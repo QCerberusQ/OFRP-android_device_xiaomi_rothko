@@ -26,6 +26,7 @@ on fs
     chown system system /dev/0:0:0:49476
     chown system system /dev/ufs-bsg0
     start mitee-helper
+    start vendor.weaver_nxp
     setprop vendor.teefs_state ready
     setprop ro.hardware.gatekeeper mitee
 

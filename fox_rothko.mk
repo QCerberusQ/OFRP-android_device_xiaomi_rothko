@@ -35,6 +35,7 @@ OF_USE_LZ4_COMPRESSION := 1
 OF_FBE_METADATA_MOUNT_IGNORE      := 1
 OF_SKIP_DECRYPTED_ADOPTED_STORAGE := 1
 OF_FORCE_CASEFOLDING              := 1
+OF_DEFAULT_KEYMASTER_VERSION      := 4.1
 
 # -----------------------------------------------------------------------------
 # Data format

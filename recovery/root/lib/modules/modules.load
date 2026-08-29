@@ -143,6 +143,9 @@ i2c-mt65xx.ko
 mtk_dramc.ko
 spi-mt65xx.ko
 tui-common.ko
+xiaomi_touch_common.ko
+goodix_core_rothko.ko
+focaltech_touch_rothko.ko
 mt6375.ko
 extdev_io_class.ko
 rt4803.ko
