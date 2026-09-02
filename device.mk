@@ -92,11 +92,6 @@ PRODUCT_PACKAGES += \
     android.hardware.keymaster@4.0 \
     android.hardware.keymaster@3.0
 
-# Secure Element (OMAPI) - required by the NXP Weaver service
-PRODUCT_PACKAGES += \
-    se_omapi \
-    se_omapi.recovery
-
 # Mtk plpath utils
 PRODUCT_PACKAGES += \
     mtk_plpath_utils \
