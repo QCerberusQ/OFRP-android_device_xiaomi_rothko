@@ -1,3 +1,7 @@
+on early-init
+    wait /sys/fs/selinux/enforce
+    write /sys/fs/selinux/enforce 0
+
 on fs
     start boot-hal-1-2
     symlink /dev/block /dev/block/bootdevice
