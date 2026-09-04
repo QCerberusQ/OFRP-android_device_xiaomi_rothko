@@ -1,5 +1,0 @@
-service tee-supplicant /vendor/bin/tee-supplicant
-	class none
-	user root
-	group root
-	seclabel u:r:recovery:s0

@@ -1,5 +1,0 @@
-service vendor.weaver_nxp /vendor/bin/hw/android.hardware.weaver-service.nxp
-	class none
-	user root
-	group root
-	seclabel u:r:recovery:s0

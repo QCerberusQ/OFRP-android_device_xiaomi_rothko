@@ -1,0 +1,126 @@
+service tee-supplicant /vendor/bin/tee-supplicant
+    class core
+    user system
+    group system secure_element nfc
+    capabilities SYS_RAWIO
+    setenv LD_LIBRARY_PATH /system/lib64/compat:/system/lib64
+    seclabel u:r:recovery:s0
+    disabled
+
+service vendor.keymint-mitee /vendor/bin/hw/android.hardware.security.keymint@3.0-service.mitee
+    class early_hal
+    user system
+    group system drmrpc
+    setenv LD_LIBRARY_PATH /system/lib64/compat:/system/lib64
+    seclabel u:r:recovery:s0
+    oneshot
+
+service vendor.gatekeeper_mitee /vendor/bin/hw/android.hardware.gatekeeper-service.mitee
+    class hal
+    user system
+    group system
+    setenv LD_LIBRARY_PATH /system/lib64/compat:/system/lib64
+    seclabel u:r:recovery:s0
+    disabled
+
+service vendor.weaver_nxp /vendor/bin/hw/android.hardware.weaver-service.nxp
+    class hal
+    user 2902
+    group system drmrpc
+    capabilities WAKE_ALARM
+    setenv LD_LIBRARY_PATH /system/lib64/compat:/system/lib64
+    seclabel u:r:recovery:s0
+    disabled
+
+service vendor.secure_element_hal_service /vendor/bin/hw/vendor.xiaomi.hardware.secure_element-service
+    class early_hal
+    user system
+    group system secure_element nfc
+    setenv LD_LIBRARY_PATH /system/lib64/compat:/system/lib64
+    seclabel u:r:recovery:s0
+    disabled
+
+service se_omapi /system/bin/se_omapi
+    class hal
+    user system
+    group system secure_element nfc
+    setenv LD_LIBRARY_PATH /system/lib64/compat:/system/lib64
+    seclabel u:r:recovery:s0
+    disabled
+
+service touchfeature-service /odm/bin/hw/vendor.xiaomi.hw.touchfeature-service
+    class hal
+    user root
+    group root system input
+    capabilities SYS_NICE
+    setenv LD_LIBRARY_PATH /odm/lib64:/system/lib64/compat:/system/lib64
+    seclabel u:r:recovery:s0
+    disabled
+
+on fs
+    mkdir /mnt/vendor/persist 0755 root root
+    mount ext4 /dev/block/by-name/persist /mnt/vendor/persist noatime nosuid nodev
+    mkdir /mnt/vendor/persist/data 0755 system system
+    mkdir /mnt/vendor/persist/fdsd 0755 system system
+    mkdir /mnt/vendor/protect_f 0771 system system
+    mkdir /mnt/vendor/protect_s 0771 system system
+    mkdir /mnt/vendor/nvdata 0755 root root
+    mkdir /mnt=========/vendor/nvcfg 0755 root root
+    mount ext4 /dev/block/by-name/protect1 /mnt/vendor/protect_f noatime nosuid nodev
+    mount ext4 /dev/block/by-name/protect2 /mnt/vendor/protect_s noatime nosuid nodev
+    mount ext4 /dev/block/by-name/nvdata /mnt/vendor/nvdata noatime nosuid nodev
+    mount ext4 /dev/block/by-name/nvcfg /mnt/vendor/nvcfg noatime nosuid nodev
+
+    chmod 0660 /dev/tee0
+    chmod 0660 /dev/teepriv0
+    chmod 0660 /dev/rpmb0
+    chmod 0660 /dev/ufs-bsg0
+    chmod 0666 /dev/kmsg
+    chown system system /dev/tee0
+    chown system system /dev/teepriv0
+    chown system system /dev/rpmb0
+    chown system system /dev/ufs-bsg0
+    setprop vendor.teefs_state ready
+    setprop ro.hardware.gatekeeper mitee
+
+service delayed_gatekeeper /system/bin/sh -c "sleep 1; start vendor.gatekeeper_mitee"
+    class core
+    user root
+    group root
+    disabled
+    oneshot
+    seclabel u:r:recovery:s0
+
+on property:sys.usb.config=fastboot && property:sys.usb.configfs=1
+    write /config/usb_gadget/g1/UDC ""
+    rm /config/usb_gadget/g1/configs/b.1/f1
+    write /config/usb_gadget/g1/idProduct 0x4EE0
+    write /config/usb_gadget/g1/configs/b.1/strings/0x409/configuration "fastboot"
+    symlink /config/usb_gadget/g1/functions/ffs.fastboot /config/usb_gadget/g1/configs/b.1/f1
+    write /config/usb_gadget/g1/UDC ${sys.usb.controller}
+    setprop sys.usb.state fastboot
+
+on property:sys.usb.config=adb && property:sys.usb.configfs=1
+    write /config/usb_gadget/g1/UDC ""
+    rm /config/usb_gadget/g1/configs/b.1/f1
+    write /config/usb_gadget/g1/idProduct 0xD001
+    write /config/usb_gadget/g1/configs/b.1/strings/0x409/configuration "adb"
+    symlink /config/usb_gadget/g1/functions/ffs.adb /config/usb_gadget/g1/configs/b.1/f1
+    write /config/usb_gadget/g1/UDC ${sys.usb.controller}
+    setprop sys.usb.state adb
+    start adbd
+
+on property:sys.usb.config=sideload && property:sys.usb.configfs=1
+    write /config/usb_gadget/g1/UDC ""
+    rm /config/usb_gadget/g1/configs/b.1/f1
+    write /config/usb_gadget/g1/idProduct 0xD001
+    write /config/usb_gadget/g1/configs/b.1/strings/0x409/configuration "sideload"
+    symlink /config/usb_gadget/g1/functions/ffs.adb /config/usb_gadget/g1/configs/b.1/f1
+    write /config/usb_gadget/g1/UDC ${sys.usb.controller}
+    setprop sys.usb.state sideload
+    start adbd
+
+on property:sys.usb.config=none && property:sys.usb.configfs=1
+    write /config/usb_gadget/g1/UDC ""
+    rm /config/usb_gadget/g1/configs/b.1/f1
+    setprop sys.usb.state none

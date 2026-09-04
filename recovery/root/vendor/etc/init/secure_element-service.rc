@@ -1,4 +1,0 @@
-service vendor.secure_element_hal_service /vendor/bin/hw/vendor.xiaomi.hardware.secure_element-service
-    class hal
-    user system
-    group system secure_element nfc
