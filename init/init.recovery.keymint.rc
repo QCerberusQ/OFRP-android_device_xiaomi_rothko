@@ -48,6 +48,12 @@ service se_omapi /system/bin/se_omapi
     seclabel u:r:recovery:s0
     disabled
 
+service dash-latemount /system/bin/sh /system/bin/rohko-latemount.sh
+    user root
+    oneshot
+    disabled
+    seclabel u:r:recovery:s0
+
 service touchfeature-service /odm/bin/hw/vendor.xiaomi.hw.touchfeature-service
     class hal
     user root
@@ -82,6 +88,10 @@ on fs
     chown system system /dev/ufs-bsg0
     setprop vendor.teefs_state ready
     setprop ro.hardware.gatekeeper mitee
+
+
+on boot
+    start rothko-latemount
 
 service delayed_gatekeeper /system/bin/sh -c "sleep 1; start vendor.gatekeeper_mitee"
     class core
