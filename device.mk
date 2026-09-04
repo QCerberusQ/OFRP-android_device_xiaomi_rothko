@@ -25,8 +25,8 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit_only.mk)
 # Configure Virtual A/B
 $(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota.mk)
 
-# Configure virtual_ab_ota compression_with_xor.mk
-$(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota/compression_with_xor.mk)
+# Enforce generic ramdisk allow list
+$(call inherit-product, $(SRC_TARGET_DIR)/product/generic_ramdisk.mk)
 
 # Configure emulated_storage.mk
 $(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
@@ -53,30 +53,32 @@ PRODUCT_PROPERTY_OVERRIDES += ro.twrp.vendor_boot=true
 ENABLE_VIRTUAL_AB := true
     
 PRODUCT_PACKAGES += \
-    update_engine \
+    create_pl_dev \
+    create_pl_dev.recovery
+
+PRODUCT_PACKAGES += \
     update_engine_sideload \
-    update_verifier \
-    checkpoint_gc
 
-AB_OTA_POSTINSTALL_CONFIG += \
-    RUN_POSTINSTALL_system=true \
-    POSTINSTALL_PATH_system=system/bin/mtk_plpath_utils \
-    FILESYSTEM_TYPE_system=erofs \
-    POSTINSTALL_OPTIONAL_system=true
-
-AB_OTA_POSTINSTALL_CONFIG += \
-    RUN_POSTINSTALL_vendor=true \
-    POSTINSTALL_PATH_vendor=bin/checkpoint_gc \
-    FILESYSTEM_TYPE_vendor=erofs \
-    POSTINSTALL_OPTIONAL_vendor=true
+#decryption
+PRODUCT_PACKAGES += \
+    se_omapi \
+    se_omapi.recovery
 
 # Bootctrl
 PRODUCT_PACKAGES += \
     android.hardware.boot@1.2-mtkimpl \
     android.hardware.boot@1.2-mtkimpl.recovery
 
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/init/init.recovery.mt6989.rc:$(TARGET_COPY_OUT_RECOVERY)/root/init.recovery.mt6989.rc \
+    $(LOCAL_PATH)/init/init.recovery.keymint.rc:$(TARGET_COPY_OUT_RECOVERY)/root/init.recovery.keymint.rc \
+
 PRODUCT_PACKAGES_DEBUG += \
     bootctrl
+
+PRODUCT_PACKAGES += \
+    fstab.mt6989 \
+    fstab.mt6989.vendor_ramdisk
 
 # Dynamic
 PRODUCT_USE_DYNAMIC_PARTITIONS := true

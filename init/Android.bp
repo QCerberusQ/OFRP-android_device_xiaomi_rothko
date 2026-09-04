@@ -14,8 +14,8 @@ cc_library_static {
 }
 
 prebuilt_etc {
-    name: "fstab.mt6991",
-    src: "fstab.mt6991",
+    name: "fstab.mt6989",
+    src: "fstab.mt6989",
     vendor: true,
     vendor_ramdisk_available: true,
 }
