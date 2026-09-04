@@ -72,6 +72,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/init/init.recovery.mt6989.rc:$(TARGET_COPY_OUT_RECOVERY)/root/init.recovery.mt6989.rc \
     $(LOCAL_PATH)/init/init.recovery.keymint.rc:$(TARGET_COPY_OUT_RECOVERY)/root/init.recovery.keymint.rc \
+    $(LOCAL_PATH)/init/rothko-latemount.sh:$(TARGET_COPY_OUT_RECOVERY)/root/system/bin/rothko-latemount.sh
 
 PRODUCT_PACKAGES_DEBUG += \
     bootctrl
@@ -87,12 +88,6 @@ PRODUCT_USE_DYNAMIC_PARTITIONS := true
 PRODUCT_PACKAGES += \
     android.hardware.health@2.1-impl \
     android.hardware.health@2.1-service
-
-# Keymaster
-PRODUCT_PACKAGES += \
-    android.hardware.keymaster@4.1 \
-    android.hardware.keymaster@4.0 \
-    android.hardware.keymaster@3.0
 
 # Mtk plpath utils
 PRODUCT_PACKAGES += \
