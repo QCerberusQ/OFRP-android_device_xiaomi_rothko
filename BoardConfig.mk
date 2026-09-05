@@ -214,12 +214,14 @@ TW_EXCLUDE_DEFAULT_USB_INIT := true
 TW_PREPARE_DATA_MEDIA_EARLY := true
 TW_EXCLUDE_APEX := true
 TW_DEFAULT_LANGUAGE := en
+TW_EXTRA_LANGUAGES := false
 TW_HAS_NO_DISPLAY_CUTOUT := false
 TW_NO_LEGACY_PROPS := true
 TW_NO_BIND_SYSTEM := true
 TW_INPUT_BLACKLIST := "hbtp_vm"
 TARGET_USE_CUSTOM_LUN_FILE_PATH := /config/usb_gadget/g1/functions/mass_storage.usb0/lun.%d/file
 TW_USE_SERIALNO_PROPERTY_FOR_DEVICE_ID := true
+TW_INCLUDE_OMAPI := true
 
 # Fastbootd
 TW_INCLUDE_FASTBOOTD := true
@@ -232,6 +234,16 @@ TWRP_EVENT_LOGGING := true
 # Tools
 TW_INCLUDE_RESETPROP := true
 TW_INCLUDE_LIBRESETPROP := true
+
+# Exclude
+TW_EXCLUDE_TZDATA := true
+TW_EXCLUDE_NANO := true
+TW_EXCLUDE_BASH := true
+TW_EXCLUDE_ZIP := true
+TW_EXCLUDE_LPDUMP := true
+TW_EXCLUDE_LPTOOLS := true
+TW_NO_EXFAT := true
+TW_NO_EXFAT_FUSE := true
 
 # Modules
 TW_LOAD_VENDOR_MODULES := "xiaomi_touch_common.ko goodix_core_rothko.ko focaltech_touch_rothko.ko haptic.ko"
