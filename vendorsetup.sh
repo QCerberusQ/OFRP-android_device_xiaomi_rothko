@@ -45,6 +45,9 @@ if [ "$1" = "$FDEVICE" -o "$FOX_BUILD_DEVICE" = "$FDEVICE" ]; then
 	export LC_ALL="C"
 	export TARGET_ARCH="arm64"
 	export ALLOW_MISSING_DEPENDENCIES=true
+	# 64MB vendor_boot
+	export FOX_DRASTIC_SIZE_REDUCTION=1
+	export FOX_EXTREME_SIZE_REDUCTION=1
 
 	# -----------------------------------------------------------------------
 	# Build identity
