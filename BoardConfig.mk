@@ -231,16 +231,7 @@ TWRP_EVENT_LOGGING := true
 
 # Tools
 TW_INCLUDE_RESETPROP := true
-TW_INCLUDE_REPACKTOOLS := true
 TW_INCLUDE_LIBRESETPROP := true
-TW_INCLUDE_LPDUMP := true
-TW_INCLUDE_LPTOOLS := true
-
-# Filesystem Feature
-TW_INCLUDE_NTFS_3G := true
-TARGET_USES_MKE2FS := true
-TW_INCLUDE_FUSE_NTFS := true
-TW_INCLUDE_FUSE_EXFAT := true
 
 # Haptic
 TW_LOAD_VENDOR_MODULES := "xiaomi_touch_common.ko goodix_core_rothko.ko focaltech_touch_rothko.ko haptic.ko"
@@ -251,4 +242,3 @@ TW_SUPPORT_INPUT_AIDL_HAPTICS_FIX_OFF := true
 # Indicator
 TW_CUSTOM_CPU_TEMP_PATH := "/sys/class/thermal/thermal_zone53/temp"
 TW_BATTERY_SYSFS_WAIT_SECONDS := 6
-
