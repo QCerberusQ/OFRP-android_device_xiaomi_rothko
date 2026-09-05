@@ -44,7 +44,6 @@ OF_UNBIND_SDCARD_F2FS             := 1
 OF_WIPE_METADATA_AFTER_DATAFORMAT := 1
 OF_VAB_ORS_WIPE_DATA_IS_FORMAT    := 1
 OF_USE_DMCTL                      := 1
-OF_ENABLE_ALL_PARTITION_TOOLS     := 1
 
 # -----------------------------------------------------------------------------
 # Backup - only partitions that are mounted in recovery.fstab
