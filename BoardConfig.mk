@@ -233,8 +233,11 @@ TWRP_EVENT_LOGGING := true
 TW_INCLUDE_RESETPROP := true
 TW_INCLUDE_LIBRESETPROP := true
 
-# Haptic
+# Modules
 TW_LOAD_VENDOR_MODULES := "xiaomi_touch_common.ko goodix_core_rothko.ko focaltech_touch_rothko.ko haptic.ko"
+TW_LOAD_VENDOR_MODULES_EXCLUDE_GKI := true
+
+# Haptic
 TW_SUPPORT_INPUT_AIDL_HAPTICS := true
 TW_SUPPORT_INPUT_AIDL_HAPTICS_FQNAME := "IVibrator/vibratorfeature"
 TW_SUPPORT_INPUT_AIDL_HAPTICS_FIX_OFF := true
