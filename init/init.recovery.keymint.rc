@@ -1,3 +1,11 @@
+# init.recovery.keymint.rc - TEE / KeyMint / Gatekeeper / Weaver / SE services
+# Xiaomi 14T Pro (rothko) - MediaTek MT6989, Android 14.1 recovery
+#
+# Vendor binaries come from the mounted /vendor and /odm partitions.
+# se_omapi is built into the recovery ramdisk (PRODUCT_PACKAGES += se_omapi.recovery;
+# requires recovery_available:true on android.se.omapi + android.hardware.secure_element
+# AIDL interfaces - see dash-recovery-tools apply-patches.sh).
+
 service tee-supplicant /vendor/bin/tee-supplicant
     class core
     user system
@@ -48,12 +56,6 @@ service se_omapi /system/bin/se_omapi
     seclabel u:r:recovery:s0
     disabled
 
-service dash-latemount /system/bin/sh /system/bin/rohko-latemount.sh
-    user root
-    oneshot
-    disabled
-    seclabel u:r:recovery:s0
-
 service touchfeature-service /odm/bin/hw/vendor.xiaomi.hw.touchfeature-service
     class hal
     user root
@@ -63,35 +65,11 @@ service touchfeature-service /odm/bin/hw/vendor.xiaomi.hw.touchfeature-service
     seclabel u:r:recovery:s0
     disabled
 
-on fs
-    mkdir /mnt/vendor/persist 0755 root root
-    mount ext4 /dev/block/by-name/persist /mnt/vendor/persist noatime nosuid nodev
-    mkdir /mnt/vendor/persist/data 0755 system system
-    mkdir /mnt/vendor/persist/fdsd 0755 system system
-    mkdir /mnt/vendor/protect_f 0771 system system
-    mkdir /mnt/vendor/protect_s 0771 system system
-    mkdir /mnt/vendor/nvdata 0755 root root
-    mkdir /mnt=========/vendor/nvcfg 0755 root root
-    mount ext4 /dev/block/by-name/protect1 /mnt/vendor/protect_f noatime nosuid nodev
-    mount ext4 /dev/block/by-name/protect2 /mnt/vendor/protect_s noatime nosuid nodev
-    mount ext4 /dev/block/by-name/nvdata /mnt/vendor/nvdata noatime nosuid nodev
-    mount ext4 /dev/block/by-name/nvcfg /mnt/vendor/nvcfg noatime nosuid nodev
-
-    chmod 0660 /dev/tee0
-    chmod 0660 /dev/teepriv0
-    chmod 0660 /dev/rpmb0
-    chmod 0660 /dev/ufs-bsg0
-    chmod 0666 /dev/kmsg
-    chown system system /dev/tee0
-    chown system system /dev/teepriv0
-    chown system system /dev/rpmb0
-    chown system system /dev/ufs-bsg0
-    setprop vendor.teefs_state ready
-    setprop ro.hardware.gatekeeper mitee
-
-
-on boot
-    start rothko-latemount
+service rothko-latemount /system/bin/sh /system/bin/rothko-latemount.sh
+    user root
+    oneshot
+    disabled
+    seclabel u:r:recovery:s0
 
 service delayed_gatekeeper /system/bin/sh -c "sleep 1; start vendor.gatekeeper_mitee"
     class core
@@ -101,36 +79,5 @@ service delayed_gatekeeper /system/bin/sh -c "sleep 1; start vendor.gatekeeper_m
     oneshot
     seclabel u:r:recovery:s0
 
-on property:sys.usb.config=fastboot && property:sys.usb.configfs=1
-    write /config/usb_gadget/g1/UDC ""
-    rm /config/usb_gadget/g1/configs/b.1/f1
-    write /config/usb_gadget/g1/idProduct 0x4EE0
-    write /config/usb_gadget/g1/configs/b.1/strings/0x409/configuration "fastboot"
-    symlink /config/usb_gadget/g1/functions/ffs.fastboot /config/usb_gadget/g1/configs/b.1/f1
-    write /config/usb_gadget/g1/UDC ${sys.usb.controller}
-    setprop sys.usb.state fastboot
-
-on property:sys.usb.config=adb && property:sys.usb.configfs=1
-    write /config/usb_gadget/g1/UDC ""
-    rm /config/usb_gadget/g1/configs/b.1/f1
-    write /config/usb_gadget/g1/idProduct 0xD001
-    write /config/usb_gadget/g1/configs/b.1/strings/0x409/configuration "adb"
-    symlink /config/usb_gadget/g1/functions/ffs.adb /config/usb_gadget/g1/configs/b.1/f1
-    write /config/usb_gadget/g1/UDC ${sys.usb.controller}
-    setprop sys.usb.state adb
-    start adbd
-
-on property:sys.usb.config=sideload && property:sys.usb.configfs=1
-    write /config/usb_gadget/g1/UDC ""
-    rm /config/usb_gadget/g1/configs/b.1/f1
-    write /config/usb_gadget/g1/idProduct 0xD001
-    write /config/usb_gadget/g1/configs/b.1/strings/0x409/configuration "sideload"
-    symlink /config/usb_gadget/g1/functions/ffs.adb /config/usb_gadget/g1/configs/b.1/f1
-    write /config/usb_gadget/g1/UDC ${sys.usb.controller}
-    setprop sys.usb.state sideload
-    start adbd
-
-on property:sys.usb.config=none && property:sys.usb.configfs=1
-    write /config/usb_gadget/g1/UDC ""
-    rm /config/usb_gadget/g1/configs/b.1/f1
-    setprop sys.usb.state none
+on boot
+    start rothko-latemount
