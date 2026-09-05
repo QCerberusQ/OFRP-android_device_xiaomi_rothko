@@ -7,7 +7,6 @@ on init
 on fs
     start boot-hal-1-2
     symlink /dev/block /dev/block/bootdevice
-    install_keyring
     # persist partition (persist.fstab) + bind to /persist
     mkdir /mnt/vendor/persist 0755 system system
     mkdir /persist 0755 system system
