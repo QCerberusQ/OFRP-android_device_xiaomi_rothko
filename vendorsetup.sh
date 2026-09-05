@@ -61,7 +61,7 @@ if [ "$1" = "$FDEVICE" -o "$FOX_BUILD_DEVICE" = "$FDEVICE" ]; then
 
 	# Reference vendor_boot image: stock ramdisks are retained,
 	# and only the recovery ramdisk is replaced by the build
-	export FOX_REFERENCE_VENDOR_BOOT_IMAGE="$(gettop)/device/xiaomi/rothko/prebuilt/stock_vendor_boot.img"
+	#export FOX_REFERENCE_VENDOR_BOOT_IMAGE="$(gettop)/device/xiaomi/rothko/prebuilt/stock_vendor_boot.img"
 
 	# -----------------------------------------------------------------------
 	# Storage / Theme Paths
