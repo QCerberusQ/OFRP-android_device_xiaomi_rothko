@@ -83,6 +83,12 @@ PRODUCT_PACKAGES += \
     android.hardware.health@2.1-impl \
     android.hardware.health@2.1-service
 
+# Keymaster
+PRODUCT_PACKAGES += \
+    android.hardware.keymaster@4.1 \
+    android.hardware.keymaster@4.0 \
+    android.hardware.keymaster@3.0
+
 # Mtk plpath utils
 PRODUCT_PACKAGES += \
     mtk_plpath_utils \
