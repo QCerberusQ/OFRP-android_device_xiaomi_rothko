@@ -64,7 +64,6 @@ PRODUCT_PACKAGES += \
     android.hardware.boot@1.2-mtkimpl.recovery
 
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/init/init.recovery.mt6989.rc:$(TARGET_COPY_OUT_RECOVERY)/root/init.recovery.mt6989.rc \
     $(LOCAL_PATH)/init/init.recovery.keymint.rc:$(TARGET_COPY_OUT_RECOVERY)/root/init.recovery.keymint.rc \
     $(LOCAL_PATH)/init/empty-device.xml:$(TARGET_COPY_OUT_RECOVERY)/root/system/etc/empty-device.xml \
     $(LOCAL_PATH)/init/rothko-latemount.sh:$(TARGET_COPY_OUT_RECOVERY)/root/system/bin/rothko-latemount.sh
