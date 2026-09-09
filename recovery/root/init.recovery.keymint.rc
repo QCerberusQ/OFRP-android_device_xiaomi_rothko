@@ -1,0 +1,69 @@
+# init.recovery.keymint.rc - rothko FBE decryption services
+# Imported by /init.recovery.mt6989.rc
+
+service tee-supplicant /vendor/bin/tee-supplicant
+    class core
+    user system
+    group system secure_element nfc
+    capabilities SYS_RAWIO
+    setenv LD_LIBRARY_PATH /system/lib64/compat:/system/lib64
+    seclabel u:r:recovery:s0
+    disabled
+
+service vendor.keymint-mitee /vendor/bin/hw/android.hardware.security.keymint@3.0-service.mitee
+    class early_hal
+    user system
+    group system drmrpc
+    setenv LD_LIBRARY_PATH /system/lib64/compat:/system/lib64
+    seclabel u:r:recovery:s0
+    oneshot
+
+service vendor.gatekeeper_mitee /vendor/bin/hw/android.hardware.gatekeeper-service.mitee
+    class hal
+    user system
+    group system
+    setenv LD_LIBRARY_PATH /system/lib64/compat:/system/lib64
+    seclabel u:r:recovery:s0
+    disabled
+
+service delayed_gatekeeper /system/bin/sh -c "sleep 1; start vendor.gatekeeper_mitee"
+    class core
+    user root
+    group root
+    disabled
+    oneshot
+    seclabel u:r:recovery:s0
+
+service vendor.secure_element_hal_service /vendor/bin/hw/vendor.xiaomi.hardware.secure_element-service
+    class early_hal
+    user system
+    group system secure_element nfc
+    setenv LD_LIBRARY_PATH /system/lib64/compat:/system/lib64
+    seclabel u:r:recovery:s0
+    disabled
+
+service se_omapi /system/bin/se_omapi
+    class hal
+    user system
+    group system secure_element nfc
+    setenv LD_LIBRARY_PATH /system/lib64/compat:/system/lib64
+    seclabel u:r:recovery:s0
+    disabled
+
+service vendor.weaver_nxp /vendor/bin/hw/android.hardware.weaver-service.nxp
+    class hal
+    user 2902
+    group system drmrpc
+    capabilities WAKE_ALARM
+    setenv LD_LIBRARY_PATH /system/lib64/compat:/system/lib64
+    seclabel u:r:recovery:s0
+    disabled
+
+service rothko-latemount /system/bin/sh /system/bin/rothko-latemount.sh
+    user root
+    oneshot
+    disabled
+    seclabel u:r:recovery:s0
+
+on boot
+    start rothko-latemount
