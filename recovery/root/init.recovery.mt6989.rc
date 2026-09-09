@@ -1,5 +1,8 @@
 import /init.recovery.keymint.rc
 
+on early-init
+    write /dev/kmsg "OFRP-ROTHKO-MARKER: init.recovery.mt6989.rc parsed"
+
 on fs
     start boot-hal-1-2
     symlink /dev/block /dev/block/bootdevice
