@@ -47,10 +47,6 @@ PRODUCT_PROPERTY_OVERRIDES += ro.twrp.vendor_boot=true
 ENABLE_VIRTUAL_AB := true
     
 PRODUCT_PACKAGES += \
-    create_pl_dev \
-    create_pl_dev.recovery
-
-PRODUCT_PACKAGES += \
     update_engine_sideload \
 
 #decryption
@@ -63,17 +59,8 @@ PRODUCT_PACKAGES += \
     android.hardware.boot@1.2-mtkimpl \
     android.hardware.boot@1.2-mtkimpl.recovery
 
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/init/init.recovery.keymint.rc:$(TARGET_COPY_OUT_RECOVERY)/root/init.recovery.keymint.rc \
-    $(LOCAL_PATH)/init/empty-device.xml:$(TARGET_COPY_OUT_RECOVERY)/root/system/etc/empty-device.xml \
-    $(LOCAL_PATH)/init/rothko-latemount.sh:$(TARGET_COPY_OUT_RECOVERY)/root/system/bin/rothko-latemount.sh
-
 PRODUCT_PACKAGES_DEBUG += \
     bootctrl
-
-PRODUCT_PACKAGES += \
-    fstab.mt6989 \
-    fstab.mt6989.vendor_ramdisk
 
 # Dynamic
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
