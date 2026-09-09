@@ -12,10 +12,3 @@ cc_library_static {
     srcs: ["init_rothko.cpp"],
     recovery_available: true,
 }
-
-prebuilt_etc {
-    name: "fstab.mt6989",
-    src: "fstab.mt6989",
-    vendor: true,
-    vendor_ramdisk_available: true,
-}
