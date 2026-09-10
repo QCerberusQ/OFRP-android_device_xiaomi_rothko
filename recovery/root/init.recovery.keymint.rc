@@ -17,6 +17,7 @@ service vendor.keymint-mitee /vendor/bin/hw/android.hardware.security.keymint@3.
     setenv LD_LIBRARY_PATH /system/lib64/compat:/system/lib64
     seclabel u:r:recovery:s0
     oneshot
+    disabled
 
 service vendor.gatekeeper_mitee /vendor/bin/hw/android.hardware.gatekeeper-service.mitee
     class hal
@@ -65,5 +66,19 @@ service rothko-latemount /system/bin/sh /system/bin/rothko-latemount.sh
     disabled
     seclabel u:r:recovery:s0
 
+# Weaver is never started from the boot path. Bringing up the eSE HAL and
+# Weaver drives an APDU exchange through mitee; if that happens while the GUI
+# is still probing keymint the TEE deadlocks and recovery hangs before the
+# first frame. Start it by hand once the UI is drawn:
+#     setprop rothko.weaver.start 1
+service rothko-weaver /system/bin/sh /system/bin/rothko-weaver.sh
+    user root
+    oneshot
+    disabled
+    seclabel u:r:recovery:s0
+
 on boot
     start rothko-latemount
+
+on property:rothko.weaver.start=1
+    start rothko-weaver

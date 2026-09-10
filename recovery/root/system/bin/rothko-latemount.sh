@@ -2,7 +2,9 @@
 # rothko-latemount.sh - FBE decryption orchestration for OrangeFox (rothko)
 # Mounts vendor/odm/vendor_dlkm, loads the NXP Secure Element modules
 # from the LIVE vendor_dlkm (OTA-safe vermagic), then starts the
-# TEE -> keymint -> SE -> weaver chain in strict dependency order.
+# TEE -> keymint -> keystore2 chain in strict dependency order.
+# The eSE HAL -> omapi -> weaver chain is NOT started here; see
+# rothko-weaver.sh.
 
 exec > /dev/kmsg 2>&1
 set -x
@@ -90,24 +92,10 @@ lsmod | grep -q nxp_i2c || insmod $SE_DIR/nxp_i2c.ko
 sleep 1
 lsmod | grep -q p73      || insmod $SE_DIR/p73.ko
 
-# /dev/p73 appears asynchronously after the i2c probe completes
-i=0
-while [ $i -lt 10 ]; do
-    [ -e /dev/p73 ] && break
-    sleep 1
-    i=$((i+1))
-done
-[ -e /dev/p73 ] || echo "WARN: /dev/p73 missing - weaver will fail"
-chmod 0660 /dev/p73
-chown 1027:1027 /dev/p73
-
-# --- 7. Secure Element HAL -> omapi -> weaver (strict order) ---------
-setprop ctl.start vendor.secure_element_hal_service
-sleep 2
-setprop ctl.start se_omapi
-sleep 2
-setprop ctl.start vendor.weaver_nxp
-sleep 2
-
-echo "rothko-latemount: orchestration complete"
-getprop init.svc.vendor.weaver_nxp
+# --- 7. STOP HERE ----------------------------------------------------
+# /dev/p73 access, the eSE HAL, se_omapi and weaver are deliberately not
+# touched from the boot path: an APDU exchange started while the GUI is
+# still probing keymint deadlocks the TEE and hangs before the first
+# frame. rothko-weaver.sh does that stage, after the UI is up.
+echo "rothko-latemount: mount + TEE stage complete"
+getprop init.svc.vendor.keymint-mitee
