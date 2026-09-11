@@ -30,9 +30,9 @@ on fs
     chown system system /dev/mmcblk0rpmb
     chown system system /dev/0:0:0:49476
     chown system system /dev/ufs-bsg0
-    start mitee-helper
+    #start mitee-helper
     setprop vendor.teefs_state ready
-    setprop ro.hardware.gatekeeper mitee
+    #setprop ro.hardware.gatekeeper mitee
 
 on post-fs
     start health-hal-2-1
