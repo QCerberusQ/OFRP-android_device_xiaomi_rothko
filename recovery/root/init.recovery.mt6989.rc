@@ -1,4 +1,4 @@
-import /init.recovery.keymint.rc
+#import /init.recovery.keymint.rc
 
 on early-init
     write /dev/kmsg "OFRP-ROTHKO-MARKER: init.recovery.mt6989.rc parsed"
