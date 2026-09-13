@@ -18,7 +18,6 @@ DEVICE_PATH := device/xiaomi/rothko
 
 # A/B
 AB_OTA_UPDATER := true
-TARGET_ENFORCE_AB_OTA_PARTITION_LIST := true
 AB_OTA_PARTITIONS += \
     apusys \
     audio_dsp \
