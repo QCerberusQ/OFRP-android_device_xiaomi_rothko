@@ -250,8 +250,10 @@ TW_NO_EXFAT_FUSE := true
 # name, so the loader was asked for a file that is not there. The remaining
 # entries are already in the stock modules.load.recovery (231 entries) and are
 # loaded by first_stage_init, so they are redundant, not harmful.
+TW_LOAD_VENDOR_BOOT_MODULES := true
 TW_LOAD_VENDOR_MODULES := "panel-n12-42-02-0a-dsc-cmd.ko panel-n12-36-02-0b-dsc-cmd.ko pwm-mtk-disp.ko leds-mtk-disp.ko leds-mtk-pwm.ko xiaomi_touch_common.ko goodix_core_rothko.ko focaltech_touch_rothko.ko"
 TW_LOAD_VENDOR_MODULES_EXCLUDE_GKI := true
+
 
 # Haptic
 TW_SUPPORT_INPUT_AIDL_HAPTICS := true
