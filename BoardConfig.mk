@@ -251,7 +251,7 @@ TW_NO_EXFAT_FUSE := true
 # loaded by first_stage_init, so they are redundant, not harmful.
 BOARD_USES_VENDOR_BOOT := true
 TW_LOAD_VENDOR_BOOT_MODULES := true
-TW_LOAD_VENDOR_MODULES := "panel-n12-42-02-0a-dsc-cmd.ko panel-n12-36-02-0b-dsc-cmd.ko pwm-mtk-disp.ko leds-mtk-disp.ko leds-mtk-pwm.ko xiaomi_touch_common.ko goodix_core_rothko.ko focaltech_touch_rothko.ko"
+#TW_LOAD_VENDOR_MODULES := "panel-n12-42-02-0a-dsc-cmd.ko panel-n12-36-02-0b-dsc-cmd.ko pwm-mtk-disp.ko leds-mtk-disp.ko leds-mtk-pwm.ko xiaomi_touch_common.ko goodix_core_rothko.ko focaltech_touch_rothko.ko"
 TW_LOAD_VENDOR_MODULES_EXCLUDE_GKI := true
 
 
