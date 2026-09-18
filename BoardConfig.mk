@@ -171,8 +171,6 @@ TARGET_COPY_OUT_ODM := odm
 TARGET_COPY_OUT_VENDOR_DLKM := vendor_dlkm
 BOARD_VENDOR_DLKMIMAGE_FILE_SYSTEM_TYPE := ext4
 
-BOARD_AVB_ENABLE := true
-
 # Hardware
 BOARD_USES_MTK_HARDWARE := true
 
@@ -185,10 +183,6 @@ TARGET_SYSTEM_PROP += $(DEVICE_PATH)/system.prop
 # Device Fstab
 TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/root/system/etc/recovery.fstab
 
-# Resolution
-TARGET_SCREEN_HEIGHT := 2712
-TARGET_SCREEN_WIDTH := 1220
-
 # Recovery
 BOARD_HAS_LARGE_FILESYSTEM := true
 BOARD_HAS_NO_SELECT_BUTTON := true
@@ -197,6 +191,11 @@ TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
 
 # Verified Boot
 BOARD_AVB_ENABLE := true
+BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --flags 3
+BOARD_AVB_RECOVERY_KEY_PATH := external/avb/test/data/testkey_rsa4096.pem
+BOARD_AVB_RECOVERY_ALGORITHM := SHA256_RSA4096
+BOARD_AVB_RECOVERY_ROLLBACK_INDEX := 1
+BOARD_AVB_RECOVERY_ROLLBACK_INDEX_LOCATION := 1
 
 # Init
 TARGET_INIT_VENDOR_LIB := libinit_rothko
@@ -250,6 +249,7 @@ TW_NO_EXFAT_FUSE := true
 # name, so the loader was asked for a file that is not there. The remaining
 # entries are already in the stock modules.load.recovery (231 entries) and are
 # loaded by first_stage_init, so they are redundant, not harmful.
+BOARD_USES_VENDOR_BOOT := true
 TW_LOAD_VENDOR_BOOT_MODULES := true
 TW_LOAD_VENDOR_MODULES := "panel-n12-42-02-0a-dsc-cmd.ko panel-n12-36-02-0b-dsc-cmd.ko pwm-mtk-disp.ko leds-mtk-disp.ko leds-mtk-pwm.ko xiaomi_touch_common.ko goodix_core_rothko.ko focaltech_touch_rothko.ko"
 TW_LOAD_VENDOR_MODULES_EXCLUDE_GKI := true
