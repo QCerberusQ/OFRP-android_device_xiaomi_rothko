@@ -49,11 +49,6 @@ ENABLE_VIRTUAL_AB := true
 PRODUCT_PACKAGES += \
     update_engine_sideload \
 
-#decryption
-PRODUCT_PACKAGES += \
-    se_omapi \
-    se_omapi.recovery
-
 # Bootctrl
 PRODUCT_PACKAGES += \
     android.hardware.boot@1.2-mtkimpl \
